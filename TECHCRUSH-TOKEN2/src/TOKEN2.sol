@@ -21,4 +21,8 @@ contract TOKEN2 is ERC20{
         _mint(msg.sender, token_AmountToMint);
     } 
 
+    function getTotalSupply() public view returns(uint256) {
+        return totalSupply();
+    }
+
 }    

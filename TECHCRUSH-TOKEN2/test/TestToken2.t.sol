@@ -87,7 +87,32 @@ contract TestToken2 is Test {
         console.log("the amount in my receiver address is", receceiverBalance);
         uint256 senderBalance = token.balanceOf(sender1);
         console.log("the sender Balnce is", senderBalance);
-
     }
+
+
+    // test if the transfer exceed balance 
+    function testTransferExceedBalance() public {
+        uint256 senderBalance = token.balanceOf(sender1);
+        console.log("the sender Balnce is", senderBalance);
+        uint amountThatExceedBalance = senderBalance + 1 ether;
+        vm.startPrank(sender1);
+        // the vm.expectRevert is used to catch error that says of a particular statement or logic in your contract 
+        vm.expectRevert();
+        token.transfer(receiver1, amountThatExceedBalance);
+        vm.stopPrank();
+    }
+
+    // test total amount to mint 
+    function testTotalSupply() public view {
+        // get the total supply of the the token OLH
+        uint256 totalSupply = token.getTotalSupply();
+        console.log("the total supply is", totalSupply);
+
+        // check that the total supply is corrrect
+        //assertEq, it checks 2 values to be equal a == b
+        assertEq(totalSupply, 50 ether);
+    }
+
+
 
 }
