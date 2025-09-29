@@ -2,7 +2,7 @@
 pragma solidity 0.8.30;
 
 import {TOKEN2} from "../src/TOKEN2.sol";
-import {Script} from "../script/Token2Script.s.sol";
+//import {Script} from "../script/Token2Script.s.sol";
 import {Test} from "../lib/forge-std/src/Test.sol";
 import {console} from "../lib/forge-std/src/console.sol";
 import {StdCheats} from "../lib/forge-std/src/StdCheats.sol";
