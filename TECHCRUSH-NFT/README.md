@@ -109,15 +109,14 @@ This project is licensed under the **MIT License**. See the [LICENSE](./LICENSE)
 Would you like me to make it sound **more professional and investor-ready** (for pitching) or keep it **community-focused and fun** (for open-source/GitHub users)?
 ```
 ```
-## METADATA
-{
-    "name": "Techcrush NFT",
-    "description":"best tech teaching plaform",
-    "images": "ipfs",
-    "attibutes": [
-        {
-            "backgroud_color": "black",
-        }
-    ]
-}
+## METADATA = 
+    '{"name":"TECHCRUSHNFT #', 
+                Strings.toString(tokenId),
+                '","description":"This is a dedicated NFT for Tech Crush cohort",',
+                '"image":"', baseURL, '",', 
+                '"attributes":[{"trait_type":"Cohort","value":"Web3"}]',
+                '}'
+            )
+        );
+
 ```
