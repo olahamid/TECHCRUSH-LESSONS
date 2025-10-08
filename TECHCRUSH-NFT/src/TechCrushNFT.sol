@@ -2,7 +2,7 @@
 pragma solidity 0.8.30;
 import {ERC721} from "../lib/openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
 import {Base64} from "../lib/openzeppelin-contracts/contracts/utils/Base64.sol";
-import {Strings} from "../lib/openzeppelin-contracts/contracts/utils/Strings.sol";
+//import {Strings} from "../lib/openzeppelin-contracts/contracts/utils/Strings.sol";
 
 contract TECHCRUSHNFT is ERC721 {
     //  forge install openzeppelin/openzeppelin-contracts
@@ -42,7 +42,7 @@ contract TECHCRUSHNFT is ERC721 {
     }
 
     // tokenURI
-    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+    //function tokenURI(uint256 tokenId) public view override returns (string memory) {
 
         //_approve
         //abi.encode and abi.endcodePacked 
@@ -51,21 +51,21 @@ contract TECHCRUSHNFT is ERC721 {
         // IF A DATA ABC + CD = "ABCCD" - abi.encodePacked = bytes memory
             //A + bccd or ab + ccd
 
-        string memory json = Base64.encode(
-            abi.encodePacked(
-            '{"name":"TECHCRUSHNFT #', 
-                Strings.toString(tokenId),
-                '","description":"This is a dedicated NFT for Tech Crush cohort",',
-                '"image":"', baseURL, '",', 
-                '"attributes":[{"trait_type":"Cohort","value":"Web3"}]',
-                '}'
-            )
-        );
+        // string memory json = Base64.encode(
+        //     abi.encodePacked(
+        //     '{"name":"TECHCRUSHNFT #', 
+        //         Strings.toString(tokenId),
+        //         '","description":"This is a dedicated NFT for Tech Crush cohort",',
+        //         '"image":"', baseURL, '",', 
+        //         '"attributes":[{"trait_type":"Cohort","value":"Web3"}]',
+        //         '}'
+        //     )
+        // );
 
         // return tokenURI(tokenId);
-        return string(abi.encodePacked("data:application/json;base64,", json));
+        //return string(abi.encodePacked("data:application/json;base64,", "json"));
 
-    }
+    //}
 
     // baseURI
     // function _baseURL() internal view override returns (string memory) {
