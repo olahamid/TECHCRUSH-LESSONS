@@ -3,6 +3,8 @@ pragma solidity 0.8.30;
 
 import {Script} from "../lib/forge-std/src/Script.sol";
 import {NFTTechCrush} from "../src/NFTTechCrush.sol";
+import {Base64} from "../lib/openzeppelin-contracts/contracts/utils/Base64.sol";
+import {console} from "../lib/forge-std/src/console.sol";
 
 contract TechCrushNFTScript is Script {
 
@@ -11,10 +13,37 @@ contract TechCrushNFTScript is Script {
     // symbol 
     string public symbol = "TCT";
     // baseURl 
-    //a + b + c
-    string public baseURI = string(abi.encodePacked("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdo","dD0iNDAwIj4KPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiMwZjE3MmEiLz4K","PGNpcmNsZSBjeD0iMjAwIiBjeT0iMjAwIiByPSIxMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzNi","ODJmNiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iMTAw","IiBmaWxsPSJub25lIiBzdHJva2U9IiM2MGE1ZmEiIHN0cm9rZS13aWR0aD0iMiIvPgo8dGV4dCB4","PSIyMDAiIHk9IjE5MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9","IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzNiODJmNiIgdGV4dC1hbmNob3I9Im1pZGRs","ZSI+VEM8L3RleHQ+Cjx0ZXh0IHg9IjIwMCIgeT0iMjMwIiBmb250LWZhbWlseT0iQXJpYWwsIHNh","bnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM2MGE1ZmEiIHRleHQtYW5jaG9yPSJtaWRk","bGUiPkNPSE9SVDwvdGV4dD4KPHRleHQgeD0iMjAwIiB5PSIzMjAiIGZvbnQtZmFtaWx5PSJBcmlh","bCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk0YTNiOCIgdGV4dC1hbmNob3I9","Im1pZGRsZSI+V2ViMyBCdWlsZGVyPC90ZXh0Pgo8L3N2Zz4="))";
 
+    NFTTechCrush public nftTechCrush;
+
+    //a + b + c = abc
+
+    //
+    string public svgBase64 = string(abi.encodePacked("data:image/svg+xml;base64,",Base64.encode('<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">'
+        '<rect width="400" height="400" fill="#1a1a1a"/>'
+        '<circle cx="200" cy="200" r="80" stroke="#00ff00" stroke-width="8" fill="#ffff00"/>'
+        '<text x="200" y="350" font-family="Arial" font-size="24" fill="#ffffff" text-anchor="middle">Tech Crush NFT</text>'
+        '</svg>')));
+
+    // encode =  ab + c = "ab""c" ~ ab + c
+    //encodePacked = ab + c = abc ~ a + bc or ab + c
     function run() external {
-        
+        vm.startBroadcast();
+        // initiate my NFT contract 
+        nftTechCrush = new NFTTechCrush(name, symbol, svgBase64);
+
+        // mint an nft to the caller 
+        nftTechCrush.mintNFT(msg.sender);
+
+        vm.stopBroadcast();
+        console.log("hamid is tall");
+        address nftTokenAddress = address(nftTechCrush);
+        console.log("NFT addr: ", nftTokenAddress);
+
+        string memory nftMemory = nftTechCrush.tokenURI(1);
+        console.log("NFT TOKEN URI:", nftMemory);
     }
 }
+
+
+// forge script script/TechCrushNFTScript.s.sol:TechCrushNFTScript --rpc-url http://127.0.0.1:8545 --private-key 0x2a871d0798f97d79848a013d4936a73bf4cc922c825d33c1cf7073dff6d409c6 --broadcast -vvvv
